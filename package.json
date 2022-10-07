@@ -1,0 +1,75 @@
+{
+  "name": "youtube-downloader",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "public/electron.cjs",
+  "homepage": "./",
+  "scripts": {
+    "dev-vite": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "dev": "concurrently -k \"BROWSER=none npm run dev-vite\" \"npm:electron\"",
+    "electron": "wait-on tcp:5173 && electron .",
+    "package": "npm run build && electron-forge package",
+    "make-mac": "npm run build && electron-forge make --platform darwin",
+    "make-linux": "npm run build && electron-forge make --platform linux",
+    "make": "npm run build && electron-forge make"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.10.8",
+    "@mui/styled-engine-sc": "^5.10.6",
+    "axios": "^1.1.0",
+    "cors": "^2.8.5",
+    "electron": "^21.1.0",
+    "electron-is-dev": "^2.0.0",
+    "express": "^4.18.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.3.6",
+    "youtube-pl": "^2.0.0"
+  },
+  "devDependencies": {
+    "@electron-forge/maker-dmg": "^6.0.0-beta.67",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@types/styled-components": "^5.1.26",
+    "@vitejs/plugin-react": "^2.1.0",
+    "concurrently": "^7.4.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0",
+    "wait-on": "^6.0.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "stock_trading_app"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux",
+            "win32"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}
