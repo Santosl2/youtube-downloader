@@ -22,11 +22,9 @@ const LazyInfo = React.lazy(async () =>
 export function Content() {
   const [playlistData, setPlaylistData] = useState<Result>({} as Result);
 
-  const handlePlaylist = useCallback(async () => {
+  const handlePlaylist = useCallback(async (url: string) => {
     try {
-      const playlistData = await api.get<Result>(
-        "/playlist/PLJmKgWXZQlJPV7o8Ex9oWVi26MGLdBABA"
-      );
+      const playlistData = await api.get<Result>(`/playlist/${url}`);
 
       setPlaylistData(playlistData.data);
     } catch {
@@ -49,7 +47,11 @@ export function Content() {
       ) : (
         <>
           <Suspense fallback={<></>}>
-            <LazyInfo author={playlistData.author} title={playlistData.title} />
+            <LazyInfo
+              author={playlistData.author}
+              title={playlistData.title}
+              estimatedItemCount={playlistData.estimatedItemCount}
+            />
           </Suspense>
 
           {playlistData.items.map((item) => (

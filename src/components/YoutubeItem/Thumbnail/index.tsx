@@ -15,7 +15,7 @@ export function Thumbnail({ url, title }: ThumbnailProps) {
         marginBlock: "1rem",
       }}
     >
-      <img src={`${url}`} srcSet={`${url}`} alt={title} loading="lazy" />
+      <img src={url} srcSet={url} alt={title} loading="lazy" />
     </ImageListItem>
   );
 }
