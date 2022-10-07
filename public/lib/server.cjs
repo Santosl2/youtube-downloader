@@ -27,13 +27,14 @@ app.post("/download/:id", async (req, res) => {
   if (!id) return res.status(400).json({ error: "No playlist Id provided" });
 
   try {
-    const fileLocale = `downloads/${playlist?.title}.${format}`;
+    const fileLocale = `downloads/${title}.${format}`;
     const fileExists = await fs.stat(fileLocale);
 
     if (title && fileExists) {
       return res.download(fileLocale);
     }
-    const playlist = await new youtube.Download().downloadSpecifyVideo(id);
+
+    await new youtube.Download().downloadSpecifyVideo(id);
 
     return res.download(fileLocale);
   } catch (error) {

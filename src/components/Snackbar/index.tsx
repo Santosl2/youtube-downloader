@@ -5,9 +5,10 @@ import { SyntheticEvent, useEffect, useState } from "react";
 export type SnackbarProps = {
   message: string;
   type: AlertColor;
+  onClose?: () => void;
 };
 
-export function Snackbar({ message, type = "error" }: SnackbarProps) {
+export function Snackbar({ message, type = "error", onClose }: SnackbarProps) {
   const [open, setOpen] = useState(true);
 
   const handleClose = (event: SyntheticEvent | Event, reason?: string) => {
@@ -16,6 +17,7 @@ export function Snackbar({ message, type = "error" }: SnackbarProps) {
     }
 
     setOpen(false);
+    onClose?.();
   };
 
   useEffect(() => {

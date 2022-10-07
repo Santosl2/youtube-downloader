@@ -23,6 +23,14 @@ export function ListSnackBarMessage() {
   }, []);
 
   return (
-    <>{data ? <Snackbar message={data.message} type={data.type} /> : null}</>
+    <>
+      {data ? (
+        <Snackbar
+          message={data.message}
+          type={data.type}
+          onClose={() => setData(undefined)}
+        />
+      ) : null}
+    </>
   );
 }

@@ -31,7 +31,7 @@ export function Content() {
       ytEvents.emit({
         event: YOUTUBE_SNACKBAR_ALERT,
         data: {
-          message: "Error while fetching playlist",
+          message: "Error while fetching playlist ",
           type: "error",
         },
       });
