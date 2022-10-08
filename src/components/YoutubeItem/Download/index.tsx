@@ -22,45 +22,15 @@ export function Download({
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const download = useCallback(
-    async (blobData: any) => {
-      setIsDownloading(true);
-      try {
-        const url = window.URL.createObjectURL(new Blob([blobData]));
-        const link = document.createElement("a");
-        link.href = url;
-
-        link.setAttribute("download", `${title}.${format}`);
-        containerRef.current?.appendChild(link);
-        link.click();
-
-        containerRef.current?.removeChild(link);
-      } catch (error) {
-        onError("Error convert response to blob");
-      } finally {
-        setIsDownloading(false);
-      }
-    },
-    [url, title, format, onError, onSuccess]
-  );
-
   const handleDownloadVideo = useCallback(async () => {
     setIsDownloading(true);
     try {
-      const { data } = await api.post(
-        `/download/${url}`,
-        {
-          format,
-          title,
-        },
-        {
-          responseType: "blob",
-        }
-      );
+      await api.post(`/download/${url}`, {
+        format,
+        title,
+      });
 
-      download(data);
-
-      onSuccess(`Download ${title} finished!`);
+      onSuccess(`Download finished! Check your 'Downloads' folder`);
     } catch {
       onError("Error while downloading " + url);
     } finally {

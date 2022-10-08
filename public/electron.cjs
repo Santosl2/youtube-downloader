@@ -1,7 +1,7 @@
 // ./public/electron.js
 const path = require("path");
 
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, globalShortcut } = require("electron");
 const isDev = require("electron-is-dev");
 
 require("./lib/server.cjs");
@@ -16,7 +16,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
-    icon: "public/icon.png",
+    icon: path.join(__dirname, "./icon.png"),
   });
 
   // and load the index.html of the app.
@@ -50,4 +50,11 @@ app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+
+  globalShortcut.register("Control+Shift+I", () => {
+    // When the user presses Ctrl + Shift + I, this function will get called
+    // You can modify this function to do other things, but if you just want
+    // to disable the shortcut, you can just return false
+    return false;
+  });
 });
