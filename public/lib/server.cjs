@@ -39,7 +39,7 @@ app.post("/download/:id", async (req, res) => {
     const fileName = playlist?.title || title;
     const locale = downloadPath + "/" + `${fileName}.${format}`;
 
-    return res.download(locale);
+    return res.json(locale);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error.message });
