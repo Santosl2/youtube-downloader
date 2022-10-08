@@ -1,8 +1,8 @@
-import { Button } from "@mui/material";
 import { useCallback, useRef, useState } from "react";
 import { api } from "../../../services";
 import DownloadIcon from "@mui/icons-material/Download";
 import { ALLOWED_FORMATS } from "..";
+import { Button } from "../../Button";
 
 type DownloadProps = {
   url: string;
@@ -16,62 +16,39 @@ export function Download({
   title,
   onError,
   onSuccess,
-  format = "mp3",
+  format,
 }: DownloadProps) {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const download = useCallback(
-    async (data: any) => {
-      const blobResponse = new Blob([data]);
-      const blobURL = window.URL.createObjectURL(blobResponse);
-      const link = document.createElement("a");
-
-      link.href = blobURL;
-      link.setAttribute("download", title);
-
-      containerRef.current?.appendChild(link);
-      link.click();
-      link.remove();
-    },
-    [containerRef]
-  );
-
   const handleDownloadVideo = useCallback(async () => {
     setIsDownloading(true);
     try {
-      const startDownload = await api.post(
-        `/download/${url}`,
-        {
-          format,
-          title,
-        },
-        {
-          responseType: "blob",
-        }
-      );
+      await api.post(`/download/${url}`, {
+        format,
+        title,
+      });
 
-      download(startDownload.data);
-
-      onSuccess(`Download ${title} finisehd!`);
+      onSuccess(`Download ${title} finished!`);
     } catch {
       onError("Error while downloading " + url);
     } finally {
       setIsDownloading(false);
     }
-  }, []);
+  }, [format]);
 
   return (
     <>
       <Button
-        variant="contained"
+        size="medium"
         onClick={() => handleDownloadVideo()}
-        disabled={isDownloading}
-        startIcon={<DownloadIcon />}
+        icon={<DownloadIcon />}
+        isLoading={isDownloading}
       >
         {isDownloading ? "Downloading..." : "Download"}
       </Button>
+
       <div ref={containerRef} />
     </>
   );

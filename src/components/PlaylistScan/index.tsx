@@ -1,15 +1,17 @@
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import { useState } from "react";
+import { Button } from "../Button";
+import DownloadIcon from "@mui/icons-material/Download";
 
 type PlaylistScanProps = {
   onScan: (url: string) => void;
+  isLoading: boolean;
 };
 
-export function PlaylistScan({ onScan }: PlaylistScanProps) {
+export function PlaylistScan({ onScan, isLoading }: PlaylistScanProps) {
   const [playlistId, setPlaylistId] = useState("");
 
   return (
@@ -40,8 +42,15 @@ export function PlaylistScan({ onScan }: PlaylistScanProps) {
         <CardActions>
           <Button
             size="small"
-            variant="contained"
-            onClick={() => onScan(playlistId)}
+            onClick={() => {
+              if (playlistId) {
+                onScan(playlistId);
+              }
+
+              setPlaylistId("");
+            }}
+            icon={<DownloadIcon />}
+            isLoading={isLoading}
           >
             Scan Playlist
           </Button>
