@@ -1,11 +1,14 @@
-import { Suspense, useCallback, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 
 import { api } from "../../services";
 import ytEvents from "../../services/events";
 
 import type { Result } from "ytpl";
 import React from "react";
-import { YOUTUBE_SNACKBAR_ALERT } from "../../services/events/constants";
+import {
+  DOWNLOAD_RESET,
+  YOUTUBE_SNACKBAR_ALERT,
+} from "../../services/events/constants";
 
 const LazyYoutubeItem = React.lazy(async () =>
   import("../YoutubeItem").then((module) => ({ default: module.YoutubeItem }))
@@ -21,8 +24,10 @@ const LazyInfo = React.lazy(async () =>
 
 export function Content() {
   const [playlistData, setPlaylistData] = useState<Result>({} as Result);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handlePlaylist = useCallback(async (url: string) => {
+    setIsLoading(true);
     try {
       const playlistData = await api.get<Result>(`/playlist/${url}`);
 
@@ -35,14 +40,31 @@ export function Content() {
           type: "error",
         },
       });
+    } finally {
+      setIsLoading(false);
     }
+  }, []);
+
+  useEffect(() => {
+    ytEvents.subscribe({
+      event: DOWNLOAD_RESET,
+      callback: (e) => {
+        setPlaylistData({} as Result);
+      },
+    });
+
+    return () =>
+      ytEvents.unsubscribe({
+        event: DOWNLOAD_RESET,
+        callback: () => {},
+      });
   }, []);
 
   return (
     <>
       {!playlistData.items ? (
         <Suspense fallback={<></>}>
-          <LazyPlaylistScan onScan={handlePlaylist} />
+          <LazyPlaylistScan onScan={handlePlaylist} isLoading={isLoading} />
         </Suspense>
       ) : (
         <>

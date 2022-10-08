@@ -1,14 +1,25 @@
-import { CardMedia, Divider, Stack, Typography } from "@mui/material";
+import { Button, CardMedia, Divider, Stack, Typography } from "@mui/material";
+import { useCallback } from "react";
 
-import type { Item, Result } from "ytpl";
+import type { Result } from "ytpl";
+import ytEvents from "../../../services/events";
+import { DOWNLOAD_RESET } from "../../../services/events/constants";
 
 type InfoProps = Pick<Result, "author" | "title" | "estimatedItemCount">;
 
 export function Info({ title, author, estimatedItemCount }: InfoProps) {
   const imageUrl = author?.avatars[0].url ?? "";
+
+  const handleDownloadReset = useCallback(() => {
+    ytEvents.emit({
+      event: DOWNLOAD_RESET,
+      data: {},
+    });
+  }, []);
+
   return (
     <>
-      <Stack spacing={1}>
+      <Stack spacing={1} marginBottom={1}>
         <Typography variant="subtitle2" component="h6">
           Playlist ({estimatedItemCount} videos)
         </Typography>
@@ -27,6 +38,17 @@ export function Info({ title, author, estimatedItemCount }: InfoProps) {
           </Typography>
         </Stack>
       </Stack>
+
+      <Button
+        variant="text"
+        sx={{
+          width: "100%",
+        }}
+        onClick={handleDownloadReset}
+      >
+        Download another playlist
+      </Button>
+
       <Divider
         sx={{
           marginBlock: 2,
