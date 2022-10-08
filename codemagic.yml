@@ -1,0 +1,57 @@
+workflows:
+  linux-build:
+    name: Linux Build
+    instance_type: linux
+    environment:
+      groups:
+        - prod
+      node: 16.14.0
+
+    scripts:
+      - name: Installing packages
+        script: yarn install
+      - name: Installing RPM to build for arch linux
+        script: sudo apt install rpm -y
+      - name: Building Applications
+        script: yarn make-linux
+
+    artifacts:
+      - out/make/deb/x64/*.deb
+      - out/make/rpm/x64/*.rpm
+      - out/make/zip/linux/x64/*.zip
+
+  windows-build:
+    name: Windows Build
+    instance_type: windows_x2
+    environment:
+      groups:
+        - prod
+      node: 16.14.0
+
+    scripts:
+      - name: Installing packages
+        script: yarn install
+      - name: Building Applications
+        script: yarn run make
+
+    artifacts:
+      - out/make/squirrel.windows/x64/*exe
+      - out/make/squirrel.windows/x64/*nupkg
+      - out/make/zip/win32/x64/*.zip
+
+  macos-build:
+    name: macOS Build
+    instance_type: mac_mini
+    environment:
+      groups:
+        - prod
+      node: 16.14.0
+
+    scripts:
+      - name: Installing packages
+        script: yarn install
+      - name: Building Applications
+        script: yarn make-mac
+
+    artifacts:
+      - out/make/*.dmg
