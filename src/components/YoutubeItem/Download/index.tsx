@@ -16,7 +16,7 @@ export function Download({
   title,
   onError,
   onSuccess,
-  format = "mp3",
+  format,
 }: DownloadProps) {
   const [isDownloading, setIsDownloading] = useState(false);
 
@@ -36,7 +36,7 @@ export function Download({
     } finally {
       setIsDownloading(false);
     }
-  }, []);
+  }, [format]);
 
   return (
     <>
