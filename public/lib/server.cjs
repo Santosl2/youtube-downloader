@@ -2,7 +2,6 @@ const express = require("express");
 const youtube = require("youtube-pl");
 const cors = require("cors");
 const app = express();
-const fs = require("fs").promises;
 
 app.use(cors());
 app.use(express.json());
@@ -34,7 +33,7 @@ app.post("/download/:id", async (req, res) => {
 
     const fileLocale = `downloads/${playlist?.title || title}.${format}`;
 
-    return res.json(fileLocale);
+    return res.download(fileLocale);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error.message });
