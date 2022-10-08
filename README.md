@@ -37,10 +37,24 @@ Start the server
 
 ## Deployment
 
-To deploy this project run
+To compile this project you need to run:
+
+### For Linux
 
 ```bash
-  npm run deploy
+  npm run make-linux
+```
+
+### For MacOS
+
+```bash
+  npm run make-mac
+```
+
+### For Windows
+
+```bash
+  npm run make
 ```
 
 ## Authors

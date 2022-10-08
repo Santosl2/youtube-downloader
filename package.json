@@ -1,7 +1,13 @@
 {
   "name": "youtube-downloader",
-  "private": true,
+  "description": "Download YouTube videos easily",
+  "license": "MIT",
+  "private": false,
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Santosl2/youtube-downloader.git"
+  },
   "type": "module",
   "main": "public/electron.cjs",
   "homepage": "./",
@@ -33,7 +39,12 @@
     "youtube-pl": "^2.0.2"
   },
   "devDependencies": {
-    "@electron-forge/maker-dmg": "^6.0.0-beta.67",
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-dmg": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.26",
@@ -59,7 +70,26 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "stock_trading_app"
+            "name": "Youtube Playlist Downloader @Santosl2"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {
+            "name": "Youtube Playlist Downloader @Santosl2"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {
+            "name": "Youtube Playlist Downloader @Santosl2"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-dmg",
+          "config": {
+            "name": "Youtube Playlist Downloader @Santosl2",
+            "format": "ULFO"
           }
         },
         {
@@ -69,14 +99,6 @@
             "linux",
             "win32"
           ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
         }
       ]
     }
