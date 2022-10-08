@@ -76,9 +76,6 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "platforms": [
-            "darwin"
-          ],
           "config": {
             "name": "youtube_playlist_downloader"
           }
