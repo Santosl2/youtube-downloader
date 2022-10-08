@@ -2,7 +2,7 @@ const express = require("express");
 const youtube = require("youtube-pl");
 const cors = require("cors");
 const app = express();
-const fs = require("fs/promises");
+const fs = require("fs").promises;
 
 app.use(cors());
 app.use(express.json());

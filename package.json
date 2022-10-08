@@ -70,25 +70,25 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Youtube Playlist Downloader @Santosl2"
+            "name": "youtube_playlist_downloader"
           }
         },
         {
           "name": "@electron-forge/maker-deb",
           "config": {
-            "name": "Youtube Playlist Downloader @Santosl2"
+            "name": "youtube_playlist_downloader"
           }
         },
         {
           "name": "@electron-forge/maker-rpm",
           "config": {
-            "name": "Youtube Playlist Downloader @Santosl2"
+            "name": "youtube_playlist_downloader"
           }
         },
         {
           "name": "@electron-forge/maker-dmg",
           "config": {
-            "name": "Youtube Playlist Downloader @Santosl2",
+            "name": "youtube_playlist_downloader",
             "format": "ULFO"
           }
         },
